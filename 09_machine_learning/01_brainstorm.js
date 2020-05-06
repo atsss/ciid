@@ -26,7 +26,7 @@ function draw() {
 
   // STEP 4: Show image + current label if confidence is over a set value
   if (label == "Book" && confidence > 0.8) {
-    image(ChairImg, 0, 0, width, video.height);
+    image(ChairImg, 50, 50, 200, 200);
   }  else if (label == "nothing") {
     //don't display any image
   }
