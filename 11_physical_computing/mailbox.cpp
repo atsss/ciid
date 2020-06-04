@@ -1,6 +1,12 @@
-#include<LiquidCrystal.h>
+#include <LiquidCrystal.h>
+#include <Servo.h>
+
 LiquidCrystal lcd(12 ,11 ,5 ,4 ,3 , 2);
+Servo myServo;
+
 const int switchPin = 13;
+const int servoPin = 9;
+const int angle = 90;
 const int messageNum = 3;
 const int lineNum = 2;
 String messages[messageNum][lineNum] = {
@@ -18,6 +24,7 @@ State messageState = NORMAL;
 void setup() {
   Serial.begin(9600);
   lcd.begin(16, 2);
+  myServo.attach(servoPin);
   pinMode(switchPin, INPUT);
 }
 
@@ -26,8 +33,7 @@ void loop() {
     unsigned long currentTime = millis();
 
     if(currentTime - prevTime > interval) {
-      // Sarvo-up code here
-
+      rotateFlag(true);
       messageState = WAITING;
     }
   } else if (messageState == WAITING) {
@@ -49,7 +55,9 @@ void loop() {
   } else if (messageState == READ) {
     lcd.clear();
     prevTime = millis();
-    // Sarvo-down code here
+
+    rotateFlag(false);
+
     messageState = NORMAL;
   }
 }
@@ -60,5 +68,17 @@ void showMessage(int index) {
   for(int i = 0; i < lineNum; i++) {
     lcd.setCursor(0, i);
     lcd.print(messages[index][i]);
+  }
+}
+
+void rotateFlag(bool isUp) {
+  int direction;
+
+  if(isUp) { direction = 1; }
+  else { direction = -1; }
+
+  for(int i = 1; i <= angle; i++) {
+    myServo.write(i * direction);
+    delay(10);
   }
 }
