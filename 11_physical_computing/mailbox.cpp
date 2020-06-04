@@ -10,26 +10,48 @@ String messages[messageNum][lineNum] = {
 };
 int index = 0;
 int prevIndex = 0;
+const int interval = 5000;
+unsigned long prevTime = 0;
+enum State { NORMAL, WAITING, SHOWN, READ };
+State messageState = NORMAL;
 
 void setup() {
   Serial.begin(9600);
   lcd.begin(16, 2);
   pinMode(switchPin, INPUT);
-
-  showMessage(index);
 }
 
 void loop() {
-  if(digitalRead(switchPin) == HIGH){
-    if(index == messageNum - 1) { index = 0; }
-    else { index++; }
+  if (messageState == NORMAL) {
+    unsigned long currentTime = millis();
 
-    delay(500);
+    if(currentTime - prevTime > interval) {
+      // Sarvo-up code here
+
+      messageState = WAITING;
+    }
+  } else if (messageState == WAITING) {
+    showMessage(index);
+    messageState = SHOWN;
+  } else if (messageState == SHOWN) {
+    if(digitalRead(switchPin) == HIGH){
+      if(index == messageNum - 1) { index = 0; }
+      else { index++; }
+
+      delay(500);
+
+      messageState = READ;
+    }
+
+    if(index != prevIndex) { showMessage(index); }
+
+    prevIndex = index;
+  } else if (messageState == READ) {
+    lcd.clear();
+    prevTime = millis();
+    // Sarvo-down code here
+    messageState = NORMAL;
   }
-
-  if(index != prevIndex) { showMessage(index); }
-
-  prevIndex = index;
 }
 
 void showMessage(int index) {
