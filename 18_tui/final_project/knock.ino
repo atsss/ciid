@@ -54,6 +54,9 @@ const int bounceDelay = 240;
 int knockCount = 0;
 long lastKnockTime = 0;
 
+// variables for twitter
+int peopleCount = 0;
+
 void setup() {
   Serial.begin(9600);
 
@@ -124,7 +127,8 @@ void loop() {
     case PLAYING:
       Serial.println("I'm PLAYING");
 
-      sendMessage(); // publish this value to PubNub
+      peopleCount++;
+      sendMessage(peopleCount); // publish this value to PubNub
 
       digitalWrite(pinLed, HIGH);
       delay(2000);
@@ -156,10 +160,10 @@ void getDistance() {
   Serial.println(distance);
 }
 
-void sendMessage() {
+void sendMessage(int counter) {
   // assemble the JSON to publish
   sending["sender"] = myName; // first key value is sender: yourName
-  sending["value"] = "Play"; // second key value is the potiometer value: analogValue
+  sending["counter"] = counter; // second key value is the potiometer counter: peopleCount
 
   serializeJson(sending, msg); // serialize JSON to send
 
