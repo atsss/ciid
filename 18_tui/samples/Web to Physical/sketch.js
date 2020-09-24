@@ -1,16 +1,16 @@
 /**
- * Experiment 5: Web to Physical 
- * 
- * Web to Physical Computing example using the Web page to publish JSON to an Arduino Nano. 
- * 
- * When the user clicks on the page, the value of 0 or 255 is published. 
- * 
+ * Experiment 5: Web to Physical
+ *
+ * Web to Physical Computing example using the Web page to publish JSON to an Arduino Nano.
+ *
+ * When the user clicks on the page, the value of 0 or 255 is published.
+ *
  * The Arduino receives the value. If the value is 255, the LED turns on. If the value is 0, the LED turns off
- * 
+ *
  * **/
 var dataServer;
-var pubKey = 'Your Publish Key Goes Here';
-var subKey = 'You Subscribe Key Goes Here';
+var pubKey = 'pub-c-b4b683ef-1879-49f9-a476-a527defd00f1';
+var subKey = 'sub-c-51100418-f2d5-11ea-afa2-4287c4b9a283';
 var channelName = "web-to-nano";
 
 let ledPin = 0;
@@ -21,14 +21,14 @@ function setup() {
 
     dataServer = new PubNub({ // this Establishes a connection to PubNub
         publish_key   : pubKey,  //get these from the pubnub account online
-        subscribe_key : subKey,  
+        subscribe_key : subKey,
         ssl: true  //enables a secure connection. This option has to be used if using the OCAD webspace
       });
 
-  dataServer.addListener({ message: readIncoming }) // listen for incoming messages 
+  dataServer.addListener({ message: readIncoming }) // listen for incoming messages
   dataServer.subscribe({channels: [channelName]}); // declare what channel you are listening to (this is delcared at the top of the code)
 
-  textAlign(CENTER); // align all text in the center 
+  textAlign(CENTER); // align all text in the center
 
 }
 
@@ -69,20 +69,20 @@ function mouseClicked() { // when you click your mouse change the value of the L
     }
 
     console.log("Mouse clicked");
-    
+
     sendTheMessage(ledPin); // Publish to PubNub
-    return ledPin; // return ledPin value to use in draw loop 
+    return ledPin; // return ledPin value to use in draw loop
 }
 
 
 function sendTheMessage(value) { // value == ledPin
 
-// Send Data to the server to draw it in all other canvases
-dataServer.publish({ // publish to the delcared channel
+  // Send Data to the server to draw it in all other canvases
+  dataServer.publish({ // publish to the delcared channel
     channel: channelName,
-    message: 
+    message:
         {   sender: 'Your Name',
-            messageText: value 
+            messageText: value
         }
     });
 }

@@ -3,8 +3,8 @@ Web to Physical.
 
 Using the subscribe feature of PubNub, this example receives the value of either 255 or 0 from a p5 sketch.
 
-If the incoming value is 255, the LED turns on. 
-If the incoming value is 0, the LEF turns off. 
+If the incoming value is 255, the LED turns on.
+If the incoming value is 0, the LEF turns off.
 
 **/
 
@@ -14,20 +14,20 @@ If the incoming value is 0, the LEF turns off.
 #include <ArduinoJson.h>
 
 
-char ssid[] = "Your WifI Network Here";
+char ssid[] = "wifi home";
 //password of your WPA Network
-char pass[] = "Your Wifi Password Here";
+char pass[] = "lachapelle";
 
-char pubkey[] = "Your Publishing Key Here";
-char subkey[] = "Your Subscription Key Here";
+char pubkey[] = "pub-c-b4b683ef-1879-49f9-a476-a527defd00f1";
+char subkey[] = "sub-c-51100418-f2d5-11ea-afa2-4287c4b9a283";
 
-int status = WL_IDLE_STATUS; 
+int status = WL_IDLE_STATUS;
 
 const static char channel[] = "web-to-nano"; // channel to use
 
 StaticJsonDocument<200> doc; // JSON object for receiving the incoming values
- 
-const char* sender; 
+
+const char* sender;
 int messageText;
 
 int ledPin = 11; // LED pin
@@ -59,9 +59,9 @@ void setup() {
 }
 
 void loop() {
-  
+
   SubscribetoPubNub(); // receive the incoming messages from your channel
-  
+
   delay(200); // wait a moment to avoid a build up of messages
 
   if (messageText == 255) { // if the incoming message is "255", set the LED to HIGH
@@ -75,14 +75,14 @@ void loop() {
 void SubscribetoPubNub() {
 
   String val; // String for printing out the incoming message
-  
+
   PubSubClient* sclient = PubNub.subscribe(channel); // subscribe to the channel defined at the top of the code
-  
+
   SubscribeCracker ritz(sclient); // This "cracker" retrieves the incoming messages and holds onto the value
-  
+
   while (!ritz.finished()) { // when the message is retrieved
-    ritz.get(val); // get the value of the message as a string 
-    if (val.length() > 0) { // make sure there is a value 
+    ritz.get(val); // get the value of the message as a string
+    if (val.length() > 0) { // make sure there is a value
       Serial.print("Received: "); // print out the message
       Serial.println(val); // entire string of json
       printMessage(val); // call printMessage function (this allows us to use the incoming data outside of this function)

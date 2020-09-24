@@ -1,9 +1,9 @@
 /**
 Physical to Physical networking example - Sender
 
-This example publishes the value of your potentiometer to a channel. The potentiometer controls the on brightness of an LED on another board. 
+This example publishes the value of your potentiometer to a channel. The potentiometer controls the on brightness of an LED on another board.
 
-This example requires one  channel and the same Publish and Subscribe keys. 
+This example requires one  channel and the same Publish and Subscribe keys.
 
 **/
 
@@ -14,12 +14,12 @@ This example requires one  channel and the same Publish and Subscribe keys.
 
 #define PubNub_BASE_CLIENT WiFiClient
 
-char ssid[] = "Your Wifi Network Name Here";
+char ssid[] = "wifi home";
 //password of your WPA Network
-char pass[] = "Your Wifi Password HEre";
+char pass[] = "lachapelle";
 
-char pubkey[] = "Your Publish Key Here";
-char subkey[] = "Your Subscribe Key HEre";
+char pubkey[] = "pub-c-b4b683ef-1879-49f9-a476-a527defd00f1";
+char subkey[] = "sub-c-51100418-f2d5-11ea-afa2-4287c4b9a283";
 
 int status = WL_IDLE_STATUS;       // the Wifi radio's status
 
@@ -69,16 +69,16 @@ void loop() {
 }
 
 void sendMessage(int val) {
-  
+
   // assemble the JSON to publish
   sending["sender"] = myName; // first key value is sender: yourName
   sending["value"] = val; // second key value is the potiometer value: analogValue
 
   serializeJson(sending, msg); // serialize JSON to send - sending is the JSON object, and it is serializing it to the char msg
-  
-  WiFiClient* client = PubNub.publish(channel, msg); // publish the variable char 
+
+  WiFiClient* client = PubNub.publish(channel, msg); // publish the variable char
   if (!client) {
-    Serial.println("publishing error"); // if there is an error print it out 
+    Serial.println("publishing error"); // if there is an error print it out
   }
 
 }

@@ -24,20 +24,21 @@ char ssid[] = "CIID Lab";
 //password of your WPA Network
 char pass[] = "buildtestrepeat";
 
-char pubkey[] = "pub-c-b5bebc3e-454d-4a9e-b2e6-124543e31611";
-char subkey[] = "sub-c-d66f402e-f2d5-11ea-ae2d-56dc81df9fb5";
+char pubkey[] = "pub-c-68aa7c10-55da-46ab-b985-b043f48e2899";
+char subkey[] = "sub-c-c4dd0922-f951-11ea-8ff3-ca9fd24ed40e";
 
 int status = WL_IDLE_STATUS;
 
-const static char channel[] = "noPhone"; // channel to use
+const static char channel[] = "time-off-device"; // channel to use
 
 StaticJsonDocument<200> doc; // JSON object for receiving the incoming values
 
 const char* sender;
-int messageText;
+int value;
 int const switchPin = A6;
 
 int pinNum = 0;
+int const onePinDurationSec= 5;
 
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
@@ -120,16 +121,17 @@ void printMessage(String v) {
 
   sender = doc["sender"]; // the name of who is sending the data
 
-  messageText = doc["messageText"]; // the message that is being sent
-  pinNum = messageText;
+  value = doc["value"]; // the message that is being sent
+  pinNum = (value / onePinDurationSec) % 16;
+  Serial.println(value / onePinDurationSec);
 
   /**NOTE: When parsing through the JSON, you must declaure the individual values in doc[""] as the same JSON as what is being sent from the web page **/
 
   // print out results
   Serial.print("sender: ");
   Serial.println(sender);
-  Serial.print("messageText: ");
-  Serial.println(messageText);
+  Serial.print("value: ");
+  Serial.println(value);
 }
 
 void colorWipe(uint32_t color, int wait, int num) {
