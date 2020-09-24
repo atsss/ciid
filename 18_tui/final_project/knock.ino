@@ -1,6 +1,14 @@
 // define pins
 const int pinAdc = A0;
 const int pinLed = 2;
+const int trigPin = 3;
+const int echoPin = 4;
+
+// for motion sensor
+long duration;
+int distance;
+const int minDist = 0;
+const int maxDist = 100;
 
 // for sound sensor
 const int activateCount = 2;
@@ -33,14 +41,17 @@ void setup() {
 
 void loop() {
   long currentTime = millis();
-  float result = analogRead(pinAdc) / 1024.0 * 3.3;
+  float result = analogRead(pinAdc) / 1024.0 * 5.0;
 
   switch(state) {
     case WATCHING:
-      // motion sensor code block
-      Serial.println("I'm WATCHING");
-      startWaitingTime = currentTime;
-      state = WAITING;
+      // Serial.println("I'm WATCHING");
+      getDistance();
+
+      if (distance >= minDist && distance <= maxDist){
+        startWaitingTime = currentTime;
+        state = WAITING;
+      }
       break;
     case WAITING:
       // Serial.println("I'm WAITING");
@@ -83,4 +94,25 @@ void loop() {
 
       break;
   }
+}
+
+void getDistance() {
+  // Clears the trigPin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+
+  // Calculating the distance
+  distance = duration*0.034/2;
+
+  // Prints the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
 }
