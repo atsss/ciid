@@ -22,19 +22,16 @@ let temperature = 20;
 //variables for conditionals
 var myColor = "RED";
 
-function preload()
-{
+function preload() {
   // initialize sound
   library = loadSound('sounds/interior.mp3');
   streetMusic = loadSound('sounds/street_music.mp3');
   knoking = loadSound('sounds/knokingFX.mp3');
 }
 
-
-
 function setup() {
   createCanvas(400, 400);
-  city = 'San Jose, Costa Rica';  
+  city = 'San Jose, Costa Rica';
   //PUBNUB SETUP
    dataServer = new PubNub({ // establish a PubNub Connection
     publish_key   : pubKey,  //get these from the pubnub account online
@@ -43,7 +40,7 @@ function setup() {
   });
 
   dataServer.addListener({ message: readIncoming }); // Listen for incoming messages on PubNub
-  dataServer.subscribe({channels: [channelName]}); // Subscribe to the channel declared at the top of   the code  
+  dataServer.subscribe({channels: [channelName]}); // Subscribe to the channel declared at the top of   the code
 }
 
 function draw() {
@@ -68,17 +65,16 @@ function readIncoming(inMessage){
 }
 //TEMPERATURE
 function loadTemp() {
-  // loadJSON(`https://api.openweathermap.org/data/2.5/weather?    q=${city}&appid=c7b87de3a8ea3acdad615412688392cd&units=metric`, drawWeather);
-  loadJSON("api.openweathermap.org/data/2.5/weather?q=San Jose&appid=c7b87de3a8ea3acdad615412688392cd&units=metric", drawWeather);
-  
+  const url = "https://api.openweathermap.org/data/2.5/weather?q=San Jose&appid=c7b87de3a8ea3acdad615412688392cd&units=metric"
+  httpGet(url, 'json', false, drawWeather);
 }
 
 function drawWeather(data) {
-   console.log(data); 
-  // console.log(data.main.temp);
+  console.log(data.main.temp);
+  temperature = data.main.temp;
   //setTimeout(loadIt, 5000);
 }
-  
+
 function visitorsDisplay(){
   push();
   fill(0);
