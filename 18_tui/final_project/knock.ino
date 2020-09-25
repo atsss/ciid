@@ -129,10 +129,11 @@ void loop() {
 
       peopleCount++;
       sendMessage(peopleCount); // publish this value to PubNub
-
       digitalWrite(pinLed, HIGH);
-      delay(2000);
+      delay(5000);
       digitalWrite(pinLed, LOW);
+      sendMessage(peopleCount);
+
       state = WATCHING;
 
       break;
