@@ -11,18 +11,30 @@ let temperature = 1.1;
 let reverb = new Tone.Convolver('https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/hm2_000_ortf_48k.mp3').toMaster();
 reverb.wet.value = 0.25;
 let sampler = new Tone.Sampler({
-  C3: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-c3.mp3',
-  'D#3': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-ds3.mp3',
-  'F#3': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-fs3.mp3',
-  A3: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-a3.mp3',
-  C4: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-c4.mp3',
-  'D#4': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-ds4.mp3',
-  'F#4': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-fs4.mp3',
-  A4: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-a4.mp3',
-  C5: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-c5.mp3',
-  'D#5': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-ds5.mp3',
-  'F#5': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-fs5.mp3',
-  A5: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-a5.mp3'
+  // C3: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-c3.mp3',
+  // 'D#3': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-ds3.mp3',
+  // 'F#3': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-fs3.mp3',
+  // A3: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-a3.mp3',
+  // C4: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-c4.mp3',
+  // 'D#4': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-ds4.mp3',
+  // 'F#4': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-fs4.mp3',
+  // A4: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-a4.mp3',
+  // C5: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-c5.mp3',
+  // 'D#5': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-ds5.mp3',
+  // 'F#5': 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-fs5.mp3',
+  // A5: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/969699/plastic-marimba-a5.mp3'
+  C3: 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/1_library.mp3',
+  'D#3': 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/2_low_key_foot_steps.mp3',
+  'F#3': 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/3_crossroad_chicken.mp3',
+  A3: 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/4_mask_yelling.mp3',
+  C4: 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/5_ocarinas_senor_loop.mp3',
+  'D#4': 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/6_globular_rattlesnake.mp3',
+  'F#4': 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/7_coffee_grinder.mp3',
+  A4: 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/8_jazz_sax.mp3',
+  C5: 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/2_low_key_foot_steps.mp3',
+  'D#5': 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/3_crossroad_chicken.mp3',
+  'F#5': 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/5_ocarinas_senor_loop.mp3',
+  A5: 'https://ciid.s3-us-west-2.amazonaws.com/18_tui/7_coffee_grinder.mp3'
 }).connect(reverb);
 sampler.release.value = 2;
 
@@ -151,7 +163,6 @@ function buildNoteSequence(seed) {
 }
 
 function startSequenceGenerator(seed) {
-  console.log('hello');
   let running = true,
     lastGenerationTask = Promise.resolve();
 
@@ -452,7 +463,7 @@ dataServer.addListener({ message: readIncoming }); // Listen for incoming messag
 dataServer.subscribe({channels: [channelName]}); // Subscribe to the channel declared at the top of   the code
 
 function readIncoming(inMessage){
-  const index = 15;
+  const index = 17;
 
   if(inMessage.channel == channelName){
     console.log(inMessage.message);
