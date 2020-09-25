@@ -1,3 +1,4 @@
+// magenta
 const MIN_NOTE = 48;
 const MAX_NOTE = 84;
 
@@ -118,6 +119,7 @@ function detectChord(notes) {
 }
 
 function buildNoteSequence(seed) {
+  console.log(temperature);
   return mm.sequences.quantizeNoteSequence(
     {
       ticksPerQuarter: 220,
@@ -149,6 +151,7 @@ function buildNoteSequence(seed) {
 }
 
 function startSequenceGenerator(seed) {
+  console.log('hello');
   let running = true,
     lastGenerationTask = Promise.resolve();
 
@@ -430,3 +433,44 @@ Promise.all([bufferLoadPromise, rnn.initialize()])
   });
 
 StartAudioContext(Tone.context, document.documentElement);
+
+// pubnub
+let dataServer;
+const pubKey = 'pub-c-b4b683ef-1879-49f9-a476-a527defd00f1';
+const subKey = 'sub-c-51100418-f2d5-11ea-afa2-4287c4b9a283';
+const channelName = 'upe';
+const url = "https://api.openweathermap.org/data/2.5/weather?q=San Jose&appid=c7b87de3a8ea3acdad615412688392cd&units=metric"
+let isToggle = true;
+
+dataServer = new PubNub({
+  publish_key   : pubKey,
+  subscribe_key : subKey,
+  ssl: true
+});
+
+dataServer.addListener({ message: readIncoming }); // Listen for incoming messages on PubNub
+dataServer.subscribe({channels: [channelName]}); // Subscribe to the channel declared at the top of   the code
+
+function readIncoming(inMessage){
+  const index = 15;
+
+  if(inMessage.channel == channelName){
+    console.log(inMessage.message);
+
+    loadTemp();
+
+    if(isToggle) { humanKeyDown(MIN_NOTE + index); }
+    else { humanKeyUp(MIN_NOTE + index); }
+
+    isToggle = !isToggle
+  }
+}
+
+function loadTemp() {
+  const req = new XMLHttpRequest();
+  req.open('GET', url, false);
+  req.send(null);
+  const response = JSON.parse(req.responseText);
+
+  temperature = response.main.temp / 10;
+}
