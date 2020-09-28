@@ -20,12 +20,12 @@
 // Declare our NeoPixel strip object:
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
-char ssid[] = "CIID Lab";
+char ssid[] = "wifi home";
 //password of your WPA Network
-char pass[] = "buildtestrepeat";
+char pass[] = "passpass";
 
-char pubkey[] = "pub-c-68aa7c10-55da-46ab-b985-b043f48e2899";
-char subkey[] = "sub-c-c4dd0922-f951-11ea-8ff3-ca9fd24ed40e";
+char pubkey[] = "pub-c-b5bebc3e-454d-4a9e-b2e6-hogehoge";
+char subkey[] = "sub-c-d66f402e-f2d5-11ea-ae2d-fugafuga";
 
 int status = WL_IDLE_STATUS;
 

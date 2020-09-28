@@ -1,6 +1,6 @@
 let dataServer;
-let pubKey = 'pub-c-a99a5926-fa29-4ab5-860d-dadf76824c4d';
-let subKey = 'sub-c-08106330-f865-11ea-afa2-4287c4b9a283';
+const pubKey = 'pub-c-b4b683ef-1879-49f9-a476-hogehoge';
+const subKey = 'sub-c-51100418-f2d5-11ea-afa2-fugafuga';
 let channelName = "memories";
 let weatherName = "weather";
 let isPressed = false;

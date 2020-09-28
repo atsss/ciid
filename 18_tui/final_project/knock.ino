@@ -3,12 +3,13 @@
 #include <PubNub.h>
 #include <ArduinoJson.h>
 
-// settings for wifi
 char ssid[] = "wifi home";
-char pass[] = "lachapelle";
+//password of your WPA Network
+char pass[] = "passpass";
 
-char pubkey[] = "pub-c-b4b683ef-1879-49f9-a476-a527defd00f1";
-char subkey[] = "sub-c-51100418-f2d5-11ea-afa2-4287c4b9a283";
+char pubkey[] = "pub-c-b5bebc3e-454d-4a9e-b2e6-hogehoge";
+char subkey[] = "sub-c-d66f402e-f2d5-11ea-ae2d-fugafuga";
+
 
 int status = WL_IDLE_STATUS;       // the Wifi radio's status
 

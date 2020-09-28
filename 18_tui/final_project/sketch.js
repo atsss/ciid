@@ -1,6 +1,6 @@
 let dataServer;
-const pubKey = 'pub-c-b4b683ef-1879-49f9-a476-a527defd00f1';
-const subKey = 'sub-c-51100418-f2d5-11ea-afa2-4287c4b9a283';
+const pubKey = 'pub-c-b4b683ef-1879-49f9-a476-hogehoge';
+const subKey = 'sub-c-51100418-f2d5-11ea-afa2-fugafuga';
 const channelName = 'upe';
 let inData;
 
